@@ -22,16 +22,12 @@ namespace RecipeTestApp
         static void Main(string[] args)
         {
             RecipeStorageCSV.RecipeDataProviderImpl rsStorage = new RecipeStorageCSV.RecipeDataProviderImpl("test.csv");
-            foreach (Ingredient ing in rsStorage.Ingredients)
-            {
-                System.Console.WriteLine("Got stored ingredient {0}", ing);
-            }
             if (rsStorage.Ingredients.Count == 0) { 
                 foreach (String ingName in TEST_ING_NAMES)
                     {
                         Ingredient tmpIng = new Ingredient();
                         tmpIng.Name = ingName;
-                        System.Console.WriteLine("Ing name: " + tmpIng);
+                        System.Console.WriteLine("Add Ingredient: " + tmpIng);
                         rsStorage.addIngredient(tmpIng);
                     }
             }
@@ -52,6 +48,15 @@ namespace RecipeTestApp
                 kuchenRcp.addIngredient(mehlItem);
                 kuchenRcp.addIngredient(backPulverItem);
                 rsStorage.addRecipe(kuchenRcp);
+                System.Console.WriteLine("Add Recipe: " + kuchenRcp);
+            }
+            foreach (Ingredient ing in rsStorage.Ingredients)
+            {
+                System.Console.WriteLine("Got stored ingredient {0}", ing);
+            }
+            foreach (Recipe.Recipe rcp in rsStorage.Recipes)
+            {
+                System.Console.WriteLine("Got stored recipe {0}", rcp);
             }
             System.Console.ReadKey();
         }

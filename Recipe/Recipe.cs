@@ -143,6 +143,15 @@ namespace Recipe
                 this._id = value;
             }
         }
+        public override string ToString()
+        {
+            String return_string = String.Format("Rcp({0}) {1}", this._id, this._name);
+            foreach(var ing in this.Items)
+            {
+                return_string = String.Format("{0}\n  {1}  {2}  {3}",return_string,ing.Count, ing.Unit, ing.Ingredient);
+            }
+            return return_string;
+        }
         private uint _id;
         private String _name;
         private String _text;

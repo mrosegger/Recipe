@@ -63,7 +63,39 @@ namespace RecipeStorageCSV
                             tmpIng.ID = uint.Parse(line_data[1]);
                             tmpIng.Name = line_data[2];
                             this._ingredients.Add(tmpIng);
+                        } else if (line_data[0]=="R") {
+                            uint count = 0;
+                            Recipe.Recipe tmpRecipe = new Recipe.Recipe();
+                            while (++count < line_data.Length)
+                            {
+                                if (count == 1)
+                                {
+                                    tmpRecipe.ID = uint.Parse(line_data[count]);
+                                } else if (count == 2)
+                                {
+                                    tmpRecipe.Name = line_data[count];
+                                } else if (count == 3)
+                                {
+                                    tmpRecipe.Text = line_data[count];
+                                } else
+                                {
+                                    RecipeItem tmpItem = new RecipeItem();
+                                    var item_data = line_data[count].Split(';');
+                                    tmpItem.Count = uint.Parse(item_data[0]);
+                                    tmpItem.Unit = item_data[1];
+                                    foreach(var tmpIngredient in this._ingredients)
+                                    {
+                                        if (tmpIngredient.ID == uint.Parse(item_data[2]))
+                                        {
+                                            tmpItem.Ingredient = tmpIngredient;
+                                        }
+                                    }
+                                    tmpRecipe.addIngredient(tmpItem);
+                                }
+                            }
+                            this._recipes.Add(tmpRecipe);
                         }
+                       
                     }
                 }
             }
