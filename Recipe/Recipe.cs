@@ -13,10 +13,10 @@ namespace Recipe
         {
             get;
         }
-        void deleteRecipe(Recipe recipe);
-        void addRecipe(Recipe recipe);
-        void deleteIngredient(Ingredient ingredient);
-        void addIngredient(Ingredient ingredient);
+        void DeleteRecipe(Recipe recipe);
+        void AddRecipe(Recipe recipe);
+        void DeleteIngredient(Ingredient ingredient);
+        void AddIngredient(Ingredient ingredient);
     }
 
     public class Ingredient
@@ -153,7 +153,7 @@ namespace Recipe
             return return_string;
         }
         private uint _id;
-        private String _name;
+        private string _name;
         private String _text;
         private List<RecipeItem> _items;
     }

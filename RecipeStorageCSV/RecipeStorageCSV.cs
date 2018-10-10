@@ -58,7 +58,6 @@ namespace RecipeStorageCSV
                         var line_data = line.Split(',');
                         if(line_data[0]=="I")
                         {
-                            // System.Console.WriteLine("Got ingredient with id {0}, and name {1}", line_data[1], line_data[2]);
                             Ingredient tmpIng = new Ingredient();
                             tmpIng.ID = uint.Parse(line_data[1]);
                             tmpIng.Name = line_data[2];
@@ -126,7 +125,7 @@ namespace RecipeStorageCSV
 
         public IReadOnlyList<Ingredient> Ingredients => _ingredients.AsReadOnly();
 
-        public void addIngredient(Ingredient ingredient)
+        public void AddIngredient(Ingredient ingredient)
         {
             if (ingredient.ID == 0)
             {
@@ -136,13 +135,13 @@ namespace RecipeStorageCSV
             this.StoreData();
         }
 
-        public void addRecipe(Recipe.Recipe recipe)
+        public void AddRecipe(Recipe.Recipe recipe)
         {
             foreach(RecipeItem rcpItem in recipe.Items)
             {
                 if (rcpItem.Ingredient.ID == 0)
                 {
-                    addIngredient(rcpItem.Ingredient);
+                    AddIngredient(rcpItem.Ingredient);
                 }
             }
             if(recipe.ID==0)
@@ -153,12 +152,12 @@ namespace RecipeStorageCSV
             this.StoreData();
         }
 
-        public void deleteIngredient(Ingredient ingredient)
+        public void DeleteIngredient(Ingredient ingredient)
         {
             throw new NotImplementedException();
         }
 
-        public void deleteRecipe(Recipe.Recipe recipe)
+        public void DeleteRecipe(Recipe.Recipe recipe)
         {
             throw new NotImplementedException();
         }

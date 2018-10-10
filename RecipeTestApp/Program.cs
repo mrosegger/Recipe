@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Recipe;
 using RecipeStorageCSV;
 
@@ -21,14 +17,14 @@ namespace RecipeTestApp
 
         static void Main(string[] args)
         {
-            RecipeStorageCSV.RecipeDataProviderImpl rsStorage = new RecipeStorageCSV.RecipeDataProviderImpl("test.csv");
+            RecipeDataProviderImpl rsStorage = new RecipeDataProviderImpl("test.csv");
             if (rsStorage.Ingredients.Count == 0) { 
                 foreach (String ingName in TEST_ING_NAMES)
                     {
                         Ingredient tmpIng = new Ingredient();
                         tmpIng.Name = ingName;
                         System.Console.WriteLine("Add Ingredient: " + tmpIng);
-                        rsStorage.addIngredient(tmpIng);
+                        rsStorage.AddIngredient(tmpIng);
                     }
             }
             if (rsStorage.Recipes.Count == 0)
@@ -47,7 +43,7 @@ namespace RecipeTestApp
                 backPulverItem.Ingredient.Name = "Backpulver";
                 kuchenRcp.addIngredient(mehlItem);
                 kuchenRcp.addIngredient(backPulverItem);
-                rsStorage.addRecipe(kuchenRcp);
+                rsStorage.AddRecipe(kuchenRcp);
                 System.Console.WriteLine("Add Recipe: " + kuchenRcp);
             }
             foreach (Ingredient ing in rsStorage.Ingredients)
@@ -58,7 +54,7 @@ namespace RecipeTestApp
             {
                 System.Console.WriteLine("Got stored recipe {0}", rcp);
             }
-            System.Console.ReadKey();
+            // System.Console.ReadKey();
         }
     }
 }
