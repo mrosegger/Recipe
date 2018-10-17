@@ -54,7 +54,7 @@ namespace RecipeTestApp
             {
                 System.Console.WriteLine("Got stored recipe {0}", rcp);
             }
-            // System.Console.ReadKey();
+            System.Console.ReadKey();
         }
     }
 }
