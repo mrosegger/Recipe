@@ -41,6 +41,7 @@
             this.lbxRecipe.Name = "lbxRecipe";
             this.lbxRecipe.Size = new System.Drawing.Size(199, 420);
             this.lbxRecipe.TabIndex = 0;
+            this.lbxRecipe.SelectedIndexChanged += new System.EventHandler(this.lbxRecipe_SelectedIndexChanged);
             // 
             // txtSearch
             // 
@@ -48,6 +49,7 @@
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(569, 22);
             this.txtSearch.TabIndex = 1;
+            this.txtSearch.Text = "SEARCH";
             // 
             // lblOutput
             // 
