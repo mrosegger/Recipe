@@ -45,11 +45,12 @@
             // 
             // txtSearch
             // 
+            this.txtSearch.AccessibleDescription = "";
             this.txtSearch.Location = new System.Drawing.Point(219, 13);
             this.txtSearch.Name = "txtSearch";
             this.txtSearch.Size = new System.Drawing.Size(569, 22);
             this.txtSearch.TabIndex = 1;
-            this.txtSearch.Text = "SEARCH";
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // lblOutput
             // 

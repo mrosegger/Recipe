@@ -50,5 +50,37 @@ namespace RecipeViewer
         {
             outputInLabel(lbxRecipe.SelectedIndex);
         }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            string searchQuery = txtSearch.Text;
+            bool emptySearch = false;
+            List<string> queryResults = new List<string>();
+            List<int> queryIDS = new List<int>();
+            foreach (Recipe.Recipe item in rsStorage.Recipes)
+            {
+                if (item.Name.ToLower().Contains(searchQuery.ToLower()))
+                {
+                    queryResults.Add(item.Name);
+                    queryIDS.Add((int)item.ID - 1);
+                }
+                else if(searchQuery == "")
+                {
+                    emptySearch = true;
+                }
+            }
+            if (emptySearch)
+            {
+                init();
+            }
+            else
+            {
+                lbxRecipe.DataSource = queryResults;
+                if (queryIDS.Count > 0)
+                {
+                    outputInLabel(queryIDS[0]);
+                }
+            }
+        }
     }
 }
