@@ -12,10 +12,11 @@ using RecipeStorageCSV;
 
 namespace RecipeViewer
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        RecipeDataProviderImpl rsStorage = new RecipeDataProviderImpl("test.csv");
-        public Form1()
+        RecipeDataProviderImpl rsStorage = new RecipeDataProviderImpl("C:/Users/Em0ting0fficer/Desktop/test.csv");
+        public static bool RecipeChanged;
+        public MainForm()
         {
             InitializeComponent();
             init();
@@ -23,6 +24,7 @@ namespace RecipeViewer
 
         public void init()
         {
+            rsStorage = new RecipeDataProviderImpl("C:/Users/Em0ting0fficer/Desktop/test.csv");
             List<string> recipeNames = new List<string>();
             foreach (Recipe.Recipe item in rsStorage.Recipes)
             {
@@ -48,7 +50,14 @@ namespace RecipeViewer
 
         private void lbxRecipe_SelectedIndexChanged(object sender, EventArgs e)
         {
-            outputInLabel(lbxRecipe.SelectedIndex);
+            string selcetElement = (string)lbxRecipe.SelectedItem;
+            foreach (Recipe.Recipe item in rsStorage.Recipes)
+            {
+                if (item.Name == selcetElement)
+                {
+                    outputInLabel((int)item.ID - 1);
+                }
+            }
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
@@ -56,13 +65,11 @@ namespace RecipeViewer
             string searchQuery = txtSearch.Text;
             bool emptySearch = false;
             List<string> queryResults = new List<string>();
-            List<int> queryIDS = new List<int>();
             foreach (Recipe.Recipe item in rsStorage.Recipes)
             {
                 if (item.Name.ToLower().Contains(searchQuery.ToLower()))
                 {
                     queryResults.Add(item.Name);
-                    queryIDS.Add((int)item.ID - 1);
                 }
                 else if(searchQuery == "")
                 {
@@ -76,11 +83,36 @@ namespace RecipeViewer
             else
             {
                 lbxRecipe.DataSource = queryResults;
-                if (queryIDS.Count > 0)
-                {
-                    outputInLabel(queryIDS[0]);
-                }
             }
+        }
+
+        private void btnEdit_Click(object sender, EventArgs e)
+        {
+			Edit edit = new Edit(lbxRecipe.SelectedIndex, ref RecipeChanged);
+            edit.Show();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (RecipeChanged)
+            {
+                init();
+                RecipeChanged = false;
+            }
+        }
+
+        private void btn_AddRecipe_Click(object sender, EventArgs e)
+        {
+            Recipe.Recipe newRecipe = new Recipe.Recipe();
+            newRecipe.Name = "new Recipe";
+            rsStorage.AddRecipe(newRecipe);
+            init();
+        }
+
+        private void btnDeleteRecipe_Click(object sender, EventArgs e)
+        {
+            rsStorage.DeleteRecipe(rsStorage.Recipes[lbxRecipe.SelectedIndex]);
+            init();
         }
     }
 }

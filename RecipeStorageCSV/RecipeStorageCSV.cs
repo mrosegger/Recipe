@@ -99,7 +99,7 @@ namespace RecipeStorageCSV
                 }
             }
         }
-        private void StoreData()
+        public void StoreData()
         {
             File.Delete(this._file_path);
             var outFile = File.OpenWrite(this._file_path);
@@ -154,12 +154,14 @@ namespace RecipeStorageCSV
 
         public void DeleteIngredient(Ingredient ingredient)
         {
-            throw new NotImplementedException();
+            _ingredients.Remove(ingredient);
+            StoreData();
         }
 
         public void DeleteRecipe(Recipe.Recipe recipe)
         {
-            throw new NotImplementedException();
+            _recipes.Remove(recipe);
+            StoreData();
         }
         private List<Recipe.Recipe> _recipes;
         private List<Ingredient> _ingredients;
