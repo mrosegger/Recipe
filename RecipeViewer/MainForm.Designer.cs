@@ -36,43 +36,44 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.btn_AddRecipe = new System.Windows.Forms.Button();
             this.btnDeleteRecipe = new System.Windows.Forms.Button();
+            this.txt_newIngredient = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // lbxRecipe
             // 
             this.lbxRecipe.FormattingEnabled = true;
-            this.lbxRecipe.ItemHeight = 16;
-            this.lbxRecipe.Location = new System.Drawing.Point(13, 15);
-            this.lbxRecipe.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.lbxRecipe.Location = new System.Drawing.Point(10, 12);
+            this.lbxRecipe.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.lbxRecipe.Name = "lbxRecipe";
-            this.lbxRecipe.Size = new System.Drawing.Size(199, 388);
+            this.lbxRecipe.Size = new System.Drawing.Size(150, 290);
             this.lbxRecipe.TabIndex = 6;
             this.lbxRecipe.SelectedIndexChanged += new System.EventHandler(this.lbxRecipe_SelectedIndexChanged);
             // 
             // lblOutput
             // 
-            this.lblOutput.Location = new System.Drawing.Point(219, 39);
+            this.lblOutput.Location = new System.Drawing.Point(164, 32);
+            this.lblOutput.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblOutput.Name = "lblOutput";
-            this.lblOutput.Size = new System.Drawing.Size(569, 391);
+            this.lblOutput.Size = new System.Drawing.Size(427, 318);
             this.lblOutput.TabIndex = 8;
             this.lblOutput.Text = "RECIPE TEXT";
             // 
             // txtSearch
             // 
             this.txtSearch.AccessibleDescription = "";
-            this.txtSearch.Location = new System.Drawing.Point(219, 15);
-            this.txtSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txtSearch.Location = new System.Drawing.Point(164, 12);
+            this.txtSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(569, 22);
+            this.txtSearch.Size = new System.Drawing.Size(428, 20);
             this.txtSearch.TabIndex = 7;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(711, 407);
-            this.btnEdit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnEdit.Location = new System.Drawing.Point(533, 331);
+            this.btnEdit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(75, 23);
+            this.btnEdit.Size = new System.Drawing.Size(56, 19);
             this.btnEdit.TabIndex = 9;
             this.btnEdit.Text = "Edit";
             this.btnEdit.UseVisualStyleBackColor = true;
@@ -84,9 +85,10 @@
             // 
             // btn_AddRecipe
             // 
-            this.btn_AddRecipe.Location = new System.Drawing.Point(13, 415);
+            this.btn_AddRecipe.Location = new System.Drawing.Point(10, 337);
+            this.btn_AddRecipe.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btn_AddRecipe.Name = "btn_AddRecipe";
-            this.btn_AddRecipe.Size = new System.Drawing.Size(75, 23);
+            this.btn_AddRecipe.Size = new System.Drawing.Size(56, 19);
             this.btn_AddRecipe.TabIndex = 10;
             this.btn_AddRecipe.Text = "Add";
             this.btn_AddRecipe.UseVisualStyleBackColor = true;
@@ -94,26 +96,36 @@
             // 
             // btnDeleteRecipe
             // 
-            this.btnDeleteRecipe.Location = new System.Drawing.Point(95, 414);
+            this.btnDeleteRecipe.Location = new System.Drawing.Point(71, 336);
+            this.btnDeleteRecipe.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnDeleteRecipe.Name = "btnDeleteRecipe";
-            this.btnDeleteRecipe.Size = new System.Drawing.Size(75, 23);
+            this.btnDeleteRecipe.Size = new System.Drawing.Size(56, 19);
             this.btnDeleteRecipe.TabIndex = 11;
             this.btnDeleteRecipe.Text = "Delete";
             this.btnDeleteRecipe.UseVisualStyleBackColor = true;
             this.btnDeleteRecipe.Click += new System.EventHandler(this.btnDeleteRecipe_Click);
             // 
+            // txt_newIngredient
+            // 
+            this.txt_newIngredient.Location = new System.Drawing.Point(10, 308);
+            this.txt_newIngredient.Name = "txt_newIngredient";
+            this.txt_newIngredient.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txt_newIngredient.Size = new System.Drawing.Size(150, 20);
+            this.txt_newIngredient.TabIndex = 12;
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(600, 366);
+            this.Controls.Add(this.txt_newIngredient);
             this.Controls.Add(this.btnDeleteRecipe);
             this.Controls.Add(this.btn_AddRecipe);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.lbxRecipe);
             this.Controls.Add(this.lblOutput);
             this.Controls.Add(this.txtSearch);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -130,6 +142,7 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button btn_AddRecipe;
         private System.Windows.Forms.Button btnDeleteRecipe;
+        private System.Windows.Forms.TextBox txt_newIngredient;
     }
 
     

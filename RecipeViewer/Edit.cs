@@ -14,7 +14,7 @@ namespace RecipeViewer
 {
     public partial class Edit : Form
     {
-        RecipeDataProviderImpl rsStorage = new RecipeDataProviderImpl("C:/Users/Em0ting0fficer/Desktop/test.csv");
+        RecipeDataProviderImpl rsStorage = new RecipeDataProviderImpl("C:/temp/test.csv");
         static int currentRecipeID;
         public Edit(int currentRecipe, ref bool RecipeChanged)
         {
@@ -61,7 +61,7 @@ namespace RecipeViewer
         {
             rsStorage.Recipes[currentRecipeID].Name = txtRecipeName.Text;
             rsStorage.StoreData();
-            (System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
+            //(System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
         }
 
         private void txtAmount_TextChanged(object sender, EventArgs e)
@@ -70,7 +70,7 @@ namespace RecipeViewer
             {
                 rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Count = result;
                 rsStorage.StoreData();
-                (System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
+                //(System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
             }
         }
 
@@ -78,7 +78,7 @@ namespace RecipeViewer
         {
             rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Unit = txtUnit.Text;
             rsStorage.StoreData();
-            (System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
+            //(System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
         }
 
         private void txtIngredient_TextChanged(object sender, EventArgs e)
@@ -86,14 +86,14 @@ namespace RecipeViewer
             rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Ingredient.Name = txtIngredient.Text;
             rsStorage.StoreData();
             lbxIngedients.Invalidate();
-            (System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
+            //(System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
         }
 
         private void txtPreperation_TextChanged(object sender, EventArgs e)
         {
             rsStorage.Recipes[currentRecipeID].Text = txtPreperation.Text;
             rsStorage.StoreData();
-            (System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
+            //(System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
         }
         /*
         private void RefreshedRecipe()
@@ -129,6 +129,11 @@ namespace RecipeViewer
         {
             Ingredient newIngredient = new Ingredient();
             newIngredient.Name = "new Ingredient";
+            if (txtnewIngredient.Text != "")
+            {
+                newIngredient.Name = txtnewIngredient.Text;
+                txtnewIngredient.Text = "";
+            }
             rsStorage.AddIngredient(newIngredient);
             RecipeItem newRecipeItem = new RecipeItem();
             newRecipeItem.Ingredient = newIngredient;
