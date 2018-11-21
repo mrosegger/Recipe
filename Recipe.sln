@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeViewer", "RecipeViewe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeViewerV2", "RecipeViewerV2\RecipeViewerV2.csproj", "{23CBAA54-15D7-4E74-B0DC-A5D13BB1A1C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeStorageDB", "RecipeStorageDB\RecipeStorageDB.csproj", "{8870B9F1-BC1B-4214-9408-88906B7FF687}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{23CBAA54-15D7-4E74-B0DC-A5D13BB1A1C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23CBAA54-15D7-4E74-B0DC-A5D13BB1A1C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23CBAA54-15D7-4E74-B0DC-A5D13BB1A1C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8870B9F1-BC1B-4214-9408-88906B7FF687}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8870B9F1-BC1B-4214-9408-88906B7FF687}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8870B9F1-BC1B-4214-9408-88906B7FF687}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8870B9F1-BC1B-4214-9408-88906B7FF687}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

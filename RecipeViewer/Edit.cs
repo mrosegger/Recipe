@@ -15,11 +15,13 @@ namespace RecipeViewer
     public partial class Edit : Form
     {
         RecipeDataProviderImpl rsStorage = new RecipeDataProviderImpl("C:/temp/test.csv");
-        static int currentRecipeID;
-        public Edit(int currentRecipe, ref bool RecipeChanged)
+        //static int currentRecipeID;
+        static Recipe.Recipe currentRecipe = new Recipe.Recipe();
+        public Edit(int currentRecipeID, ref bool RecipeChanged)
         {
             InitializeComponent();
-            currentRecipeID = currentRecipe;
+            //currentRecipeID = currentRecipe;
+            currentRecipe = getRecipe(currentRecipeID);
             init();
         }
 
@@ -30,19 +32,19 @@ namespace RecipeViewer
 
         public void init()
         {
-            txtRecipeName.Text = rsStorage.Recipes[currentRecipeID].Name;
+            txtRecipeName.Text = currentRecipe.Name;
             List<string> recipeitems = new List<string>();
-            foreach (RecipeItem item in rsStorage.Recipes[currentRecipeID].Items)
+            foreach (RecipeItem item in currentRecipe.Items)
             {
                 recipeitems.Add(item.Ingredient.Name);
             }
             lbxIngedients.DataSource = recipeitems;
             try
             {
-                txtAmount.Text = rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Count.ToString();
-                txtIngredient.Text = rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Ingredient.Name.ToString();
-                txtUnit.Text = rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Unit.ToString();
-                txtPreperation.Text = rsStorage.Recipes[currentRecipeID].Text;
+                txtAmount.Text = currentRecipe.Items[lbxIngedients.SelectedIndex].Count.ToString();
+                txtIngredient.Text = currentRecipe.Items[lbxIngedients.SelectedIndex].Ingredient.Name.ToString();
+                txtUnit.Text = currentRecipe.Items[lbxIngedients.SelectedIndex].Unit.ToString();
+                txtPreperation.Text = currentRecipe.Text;
             }
             catch
             {
@@ -52,14 +54,14 @@ namespace RecipeViewer
 
         private void lbxIngedients_SelectedIndexChanged(object sender, EventArgs e)
         {
-            txtAmount.Text = rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Count.ToString();
-            txtIngredient.Text = rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Ingredient.Name.ToString();
-            txtUnit.Text = rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Unit.ToString();
+            txtAmount.Text = currentRecipe.Items[lbxIngedients.SelectedIndex].Count.ToString();
+            txtIngredient.Text = currentRecipe.Items[lbxIngedients.SelectedIndex].Ingredient.Name.ToString();
+            txtUnit.Text = currentRecipe.Items[lbxIngedients.SelectedIndex].Unit.ToString();
         }
 
         private void txtRecipeName_TextChanged(object sender, EventArgs e)
         {
-            rsStorage.Recipes[currentRecipeID].Name = txtRecipeName.Text;
+            currentRecipe.Name = txtRecipeName.Text;
             rsStorage.StoreData();
             //(System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
         }
@@ -68,7 +70,7 @@ namespace RecipeViewer
         {
             if (uint.TryParse(txtAmount.Text, out uint result))
             {
-                rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Count = result;
+                currentRecipe.Items[lbxIngedients.SelectedIndex].Count = result;
                 rsStorage.StoreData();
                 //(System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
             }
@@ -76,14 +78,14 @@ namespace RecipeViewer
 
         private void txtUnit_TextChanged(object sender, EventArgs e)
         {
-            rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Unit = txtUnit.Text;
+            currentRecipe.Items[lbxIngedients.SelectedIndex].Unit = txtUnit.Text;
             rsStorage.StoreData();
             //(System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
         }
 
         private void txtIngredient_TextChanged(object sender, EventArgs e)
         {
-            rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Ingredient.Name = txtIngredient.Text;
+            currentRecipe.Items[lbxIngedients.SelectedIndex].Ingredient.Name = txtIngredient.Text;
             rsStorage.StoreData();
             lbxIngedients.Invalidate();
             //(System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
@@ -91,7 +93,7 @@ namespace RecipeViewer
 
         private void txtPreperation_TextChanged(object sender, EventArgs e)
         {
-            rsStorage.Recipes[currentRecipeID].Text = txtPreperation.Text;
+            currentRecipe.Text = txtPreperation.Text;
             rsStorage.StoreData();
             //(System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
         }
@@ -100,10 +102,10 @@ namespace RecipeViewer
         {
             if (rebuildIngredient)
             {
-                RecipeItem itemToDelete = rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex];
-                Ingredient ingredientToDelete = rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Ingredient;
+                RecipeItem itemToDelete = currentRecipe.Items[lbxIngedients.SelectedIndex];
+                Ingredient ingredientToDelete = currentRecipe.Items[lbxIngedients.SelectedIndex].Ingredient;
                 Ingredient refreshedIngredient = new Ingredient();
-                refreshedIngredient.ID = rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex].Ingredient.ID;
+                refreshedIngredient.ID = currentRecipe.Items[lbxIngedients.SelectedIndex].Ingredient.ID;
                 refreshedIngredient.Name = txtIngredient.Text;
                 rsStorage.DeleteIngredient(ingredientToDelete);
                 rsStorage.AddIngredient(refreshedIngredient);
@@ -114,13 +116,14 @@ namespace RecipeViewer
                     refreshedRecipeItem.Count = result;
                 }
                 refreshedRecipeItem.Unit = txtUnit.Text;
-                rsStorage.Recipes[currentRecipeID].deleteIngredient(itemToDelete);
-                rsStorage.Recipes[currentRecipeID].addIngredient(refreshedRecipeItem);
+                currentRecipe.deleteIngredient(itemToDelete);
+                currentRecipe.addIngredient(refreshedRecipeItem);
             }
         }*/
 
         private void btn_CloseEdit_Click(object sender, EventArgs e)
         {
+            writeRecipe(currentRecipe);
             (System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
             Close();
         }
@@ -139,14 +142,56 @@ namespace RecipeViewer
             newRecipeItem.Ingredient = newIngredient;
             newRecipeItem.Count = 0;
             newRecipeItem.Unit = "";
-            rsStorage.Recipes[currentRecipeID].addIngredient(newRecipeItem);
+            currentRecipe.addIngredient(newRecipeItem);
             init();
         }
 
         private void btnDeleteIngredient_Click(object sender, EventArgs e)
         {
-            rsStorage.Recipes[currentRecipeID].deleteIngredient(rsStorage.Recipes[currentRecipeID].Items[lbxIngedients.SelectedIndex]);
+            currentRecipe.deleteIngredient(currentRecipe.Items[lbxIngedients.SelectedIndex]);
             init();
+        }
+
+        //TODO Test if this works;; Also add one to wirte to the database
+        private Recipe.Recipe getRecipe(int recipeID)
+        {
+            Recipe.Recipe fetchedRecipe = new Recipe.Recipe();
+
+            foreach (Recipe.Recipe recipe in rsStorage.Recipes)
+            {
+                if (recipe.ID == recipeID)
+                {
+                    fetchedRecipe = recipe;
+                }
+            }
+
+            return fetchedRecipe;
+        }
+
+        private void writeRecipe(Recipe.Recipe toBeSetRecipe)
+        {
+            int setRecipeID = 0;
+            for (int index = 0; index < rsStorage.Recipes.Count; index++)
+            {
+                if (rsStorage.Recipes[index].ID == toBeSetRecipe.ID)
+                {
+                    setRecipeID = index;
+                }
+            }
+            rsStorage.Recipes[setRecipeID].Name = toBeSetRecipe.Name;
+            rsStorage.Recipes[setRecipeID].Text = toBeSetRecipe.Text;
+            int StorageRecipeCount = rsStorage.Recipes[setRecipeID].Items.Count;
+            int ToBeSetRecipeCount = toBeSetRecipe.Items.Count;
+            //Fix issue to delete right recipes
+            for (int index = 0; index < StorageRecipeCount; index++)
+            {
+                rsStorage.Recipes[setRecipeID].deleteIngredient(rsStorage.Recipes[setRecipeID].Items[index]);
+            }
+            for (int index = 0; index < ToBeSetRecipeCount; index++)
+            {
+                rsStorage.Recipes[setRecipeID].addIngredient(toBeSetRecipe.Items[index]);
+            }
+            rsStorage.StoreData();
         }
     }
 }
