@@ -148,6 +148,7 @@ namespace RecipeViewer
 
         private void btnDeleteIngredient_Click(object sender, EventArgs e)
         {
+            rsStorage.DeleteIngredient(currentRecipe.Items[lbxIngedients.SelectedIndex].Ingredient);
             currentRecipe.deleteIngredient(currentRecipe.Items[lbxIngedients.SelectedIndex]);
             init();
         }
