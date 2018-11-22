@@ -16,7 +16,7 @@ namespace RecipeViewer
     {
         RecipeDataProviderImpl rsStorage = new RecipeDataProviderImpl("C:/temp/test.csv");
         //static int currentRecipeID;
-        static Recipe.Recipe currentRecipe = new Recipe.Recipe();
+        Recipe.Recipe currentRecipe = new Recipe.Recipe();
         public Edit(int currentRecipeID, ref bool RecipeChanged)
         {
             InitializeComponent();
@@ -123,7 +123,7 @@ namespace RecipeViewer
 
         private void btn_CloseEdit_Click(object sender, EventArgs e)
         {
-            writeRecipe(currentRecipe);
+            writeRecipe();
             (System.Windows.Forms.Application.OpenForms["MainForm"] as MainForm).init();
             Close();
         }
@@ -168,28 +168,33 @@ namespace RecipeViewer
             return fetchedRecipe;
         }
 
-        private void writeRecipe(Recipe.Recipe toBeSetRecipe)
+        private void writeRecipe()
         {
             int setRecipeID = 0;
             for (int index = 0; index < rsStorage.Recipes.Count; index++)
             {
-                if (rsStorage.Recipes[index].ID == toBeSetRecipe.ID)
+                if (rsStorage.Recipes[index].ID == currentRecipe.ID)
                 {
                     setRecipeID = index;
                 }
             }
-            rsStorage.Recipes[setRecipeID].Name = toBeSetRecipe.Name;
-            rsStorage.Recipes[setRecipeID].Text = toBeSetRecipe.Text;
+            rsStorage.Recipes[setRecipeID].Name = currentRecipe.Name;
+            rsStorage.Recipes[setRecipeID].Text = currentRecipe.Text;
             int StorageRecipeCount = rsStorage.Recipes[setRecipeID].Items.Count;
-            int ToBeSetRecipeCount = toBeSetRecipe.Items.Count;
-            //Fix issue to delete right recipes
-            for (int index = 0; index < StorageRecipeCount; index++)
+            int ToBeSetRecipeCount = currentRecipe.Items.Count;
+            List<RecipeItem> RecipeItemList = new List<RecipeItem>();
+            foreach (RecipeItem item in currentRecipe.Items)
             {
-                rsStorage.Recipes[setRecipeID].deleteIngredient(rsStorage.Recipes[setRecipeID].Items[index]);
+                RecipeItemList.Add(item);
+            }
+            //Fix issue to delete right recipes
+            for (int index = StorageRecipeCount; index > 0; index--)
+            {
+                rsStorage.Recipes[setRecipeID].deleteIngredient(rsStorage.Recipes[setRecipeID].Items[index - 1]);
             }
             for (int index = 0; index < ToBeSetRecipeCount; index++)
             {
-                rsStorage.Recipes[setRecipeID].addIngredient(toBeSetRecipe.Items[index]);
+                rsStorage.Recipes[setRecipeID].addIngredient(RecipeItemList[index]);
             }
             rsStorage.StoreData();
         }
